@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Domain.Abstractions;
-using CleanArchitecture.Domain.Vehicles;
 
-namespace CleanArchitecture.Domain.Vehiculos
+
+namespace CleanArchitecture.Domain.Vehicles
 {
-    public sealed class Vehiculo:Entity
+    public sealed class Vehicle:Entity
     {
-        public Vehiculo (
+        public Vehicle (
             Guid id,
             Model model,
             Vin vin,
