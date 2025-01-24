@@ -9,7 +9,7 @@ namespace CleanArchitecture.Domain.Rentals
 {
     public class PriceService
     {
-        public static PriceDetail CalculatePrice(Vehicle vehicle, DateRange dateRange)
+        public  PriceDetail CalculatePrice(Vehicle vehicle, DateRange dateRange)
         {
           var typeCurrency= vehicle.Price!.TypeCurrency;
           var priceByPeriod = new Currency(dateRange.NumberOfDays*vehicle.Price.Amount, typeCurrency);
@@ -40,7 +40,6 @@ namespace CleanArchitecture.Domain.Rentals
             vehicle.MaintenanceCurrency ?? Currency.Zero(), 
             accessorieCharges, 
             priceTotal);
-
         }
 
 

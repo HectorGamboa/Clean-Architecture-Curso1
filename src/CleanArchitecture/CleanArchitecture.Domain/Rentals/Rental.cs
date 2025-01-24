@@ -50,16 +50,17 @@ namespace CleanArchitecture.Domain.Rentals
 
         public static Rental Reserve(
             Guid userId,
-            Guid vehicleId,
+            Vehicle vehicle,
             DateRange dateRange,
-            DateTime? dateCreated,
-            PriceDetail priceDetail
+            DateTime dateCreated,
+            PriceService priceService
         )
         {
+            var priceDetail = priceService.CalculatePrice(vehicle, dateRange);
             var rental = new Rental(
                 Guid.NewGuid(),
                 userId,
-                vehicleId,
+                vehicle.Id,
                 dateRange,
                 priceDetail.PriceByPeriod,
                 priceDetail.Mantainance,
@@ -68,10 +69,65 @@ namespace CleanArchitecture.Domain.Rentals
                 StatusRental.Reserved,
                 dateCreated
             );
-            
+
             rental.RaiseDomainEvent(new RentalReservedDomainEvent(rental.Id));
+            vehicle.DateOfLastRental = dateCreated;
             return rental;
         }
 
+        public Result  Confirm(DateTime utcNow){
+            if(Status !=  StatusRental.Reserved){
+                // se dispare una exception con un message error
+                 return Result.Failure(ErrorsRental.NotReserved);
+            }
+            Status = StatusRental.Confirmed;
+            DateConfirmed = utcNow;
+            RaiseDomainEvent(new RentalConfirmedDomainEvent(Id));
+            return Result.Success();
+        }
+
+        public  Result Reject(DateTime utcNow){
+            if(Status != StatusRental.Reserved){
+                // se dispare una exception con un message error
+                return Result.Failure(ErrorsRental.NotReserved);
+            }
+            Status = StatusRental.Rejected;
+            DateRejected = utcNow;
+            RaiseDomainEvent(new RentalRejectedDomainEvent(Id));
+            return Result.Success();
+        }
+
+        public  Result Canceled(DateTime utcNow){
+            if(Status != StatusRental.Confirmed){
+                // se dispare una exception con un message error
+                return Result.Failure(ErrorsRental.NotConfirmed);
+            }
+
+            var currentDate = DateOnly.FromDateTime(utcNow);
+            if(DateRange.Start < currentDate){
+                // se dispare una exception con un message error
+                return Result.Failure(ErrorsRental.AlreadyStarted);
+            }
+            Status = StatusRental.Canceled;
+            DateCanceled = utcNow;
+            RaiseDomainEvent(new RentalCanceledDomainEvent(Id));
+            return Result.Success();
+        }
+   
+        public Result Complete(DateTime utcNow){
+            if(Status != StatusRental.Confirmed){
+                // se dispare una exception con un message error
+                return Result.Failure(ErrorsRental.NotConfirmed);
+            }
+            var currentDate = DateOnly.FromDateTime(utcNow);
+            if(DateRange.End < currentDate){
+                // se dispare una exception con un message error
+                return Result.Failure(ErrorsRental.NotConfirmed);
+            }
+            Status = StatusRental.Completed;
+            DateCompleted = utcNow;
+            RaiseDomainEvent(new RentalCompletedDomainEvent( Id));
+            return Result.Success();
+        }
     }
 }

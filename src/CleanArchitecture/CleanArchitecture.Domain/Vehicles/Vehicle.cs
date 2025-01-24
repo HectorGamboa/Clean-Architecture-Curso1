@@ -33,7 +33,7 @@ namespace CleanArchitecture.Domain.Vehicles
         public Addresses ?Addresses { get; private set; }
         public Currency? Price{ get; private set; }
         public Currency? MaintenanceCurrency{ get; private set; }
-        public DateTime DateOfLastRental  { get; private set; }
+        public DateTime DateOfLastRental  { get; internal set; }
         public List<Accessory> Accessories { get; private set; } = [];
     }
 }
