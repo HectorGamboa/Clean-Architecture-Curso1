@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Domain.Vehicles
+namespace CleanArchitecture.Domain.Shared
 {
     public record Currency(decimal Amount,TypeCurrency TypeCurrency){
         public  static Currency operator +(Currency frist, Currency second) {
