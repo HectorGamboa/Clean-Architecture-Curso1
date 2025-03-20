@@ -7,6 +7,6 @@ namespace CleanArchitecture.Domain.Abstractions
 {
     public interface IUnitOfWork
     {
-        Task<int> SaveChanceAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -10,7 +10,7 @@ namespace CleanArchitecture.Domain.Reviews
 {
     public sealed class Review:Entity
     {
-        private Review(Guid id, Guid vehicleId, Guid rentalId, Guid userId, int rating, string ?comment):base(id)
+        private Review(Guid id, Guid vehicleId, Guid rentalId, Guid userId, Rating rating, Comment comment):base(id)
         {
             Id = id;
             VehicleId = vehicleId;
@@ -23,11 +23,11 @@ namespace CleanArchitecture.Domain.Reviews
         public Guid VehicleId { get; private set; }
         public Guid RentalId { get; private set; }
         public Guid UserId { get; private set; }
-        public int Rating { get; private set; }
-        public string ?Comment { get; private set; }
+        public Rating Rating { get; private set; }
+        public Comment Comment { get; private set; }
         public DateTime DateCreate { get; private set; }
 
-        public static Result<Review> Create(Guid vehicleId, Rental rental, int rating, string ?comment)
+        public static Result<Review> Create(Guid vehicleId, Rental rental, Rating rating, Comment comment)
         {
             if( rental.Status != StatusRental.Completed)
             {
