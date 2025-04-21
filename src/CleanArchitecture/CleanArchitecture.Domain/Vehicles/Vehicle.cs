@@ -17,7 +17,7 @@ namespace CleanArchitecture.Domain.Vehicles
             Currency currencyPrice,
             Currency currencyMaintenance,
             DateTime ?dateOfLastRental,
-            Addresses addresses,
+            Adresser addresses,
             List<Accessory> accessories
             ):base(id)
         {
@@ -31,7 +31,7 @@ namespace CleanArchitecture.Domain.Vehicles
         }
         public Model ?Model { get; private set; }
         public Vin ?Vin { get; private set; }
-        public Addresses ?Addresses { get; private set; }
+        public Adresser ?Addresses { get; private set; }
         public Currency? Price{ get; private set; }
         public Currency? MaintenanceCurrency{ get; private set; }
         public DateTime DateOfLastRental  { get; internal set; }

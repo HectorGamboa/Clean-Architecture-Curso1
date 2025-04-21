@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Vehicles
 {
-    public record Addresses
+    public record Adresser
    (
     string Country,
     string Department,

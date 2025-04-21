@@ -1,5 +1,7 @@
 
+using CleanArchitecture.Application.Abstractions.Behaviors;
 using CleanArchitecture.Domain.Rentals;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.Application
@@ -10,8 +12,11 @@ namespace CleanArchitecture.Application
         {
             services.AddMediatR(configuration =>{
                 configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+                configuration.AddOpenBehavior(typeof(LogginBehaviors<,>));
+                configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
             services.AddTransient<PriceService>();
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;
         }
     }

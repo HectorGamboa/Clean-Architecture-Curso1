@@ -38,3 +38,16 @@ TestResults/
 *.msbuilds
 *.pubxml
 *.pubxml.user
+
+
+# Archivos de VS y Copilot
+.vs/
+.vscode/
+*.db
+*.db-shm
+*.db-wal
+*.vsscc
+*.vsix
+*.vsdx
+*.docstates
+*.vscode/
