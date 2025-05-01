@@ -15,7 +15,7 @@ namespace CleanArchitecture.Domain.Shared
             Usd,
             Eur
         ];
-        public static TypeCurrency FromString(string code){
+        public static TypeCurrency FromCode(string code){
             return All.FirstOrDefault(x => x.Code == code) ?? 
                 throw new ArgumentException($"Invalid currency code: {code}");
         }

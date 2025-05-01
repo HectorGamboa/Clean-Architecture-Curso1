@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Users
 {
-    public record Nombre(string Value);
+    public record Name(string Value);
 }
