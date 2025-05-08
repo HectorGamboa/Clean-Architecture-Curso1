@@ -1,6 +1,7 @@
 
 using CleanArchitecture.Application.Abstractions.Clock;
 using CleanArchitecture.Application.Abstractions.Messging;
+using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Rentals;
 using CleanArchitecture.Domain.Users;
@@ -51,10 +52,15 @@ namespace CleanArchitecture.Application.Rentals.RentalReservation
             {
                 return Result.Failure<Guid>(ErrorsRental.Overlap);
             }
-            var rental = Rental.Reserve( user.Id,vehicle,  duration,_dateTimeProvider.DateTimeCurrenTime,_priceService);
-            _rentalRepository.Add(rental);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return rental.Id;
+            try{
+                var rental = Rental.Reserve( user.Id,vehicle,  duration,_dateTimeProvider.DateTimeCurrenTime,_priceService);
+                _rentalRepository.Add(rental);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                return rental.Id;
+            }catch (ConcurrencyException)
+            {
+                return Result.Failure<Guid>(ErrorsRental.Overlap);
+            }
         }
     }
 

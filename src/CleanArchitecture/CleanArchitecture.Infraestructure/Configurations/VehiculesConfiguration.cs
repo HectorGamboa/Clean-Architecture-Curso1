@@ -28,7 +28,8 @@ namespace CleanArchitecture.Infraestructure.Configurations
                 priceBuilder.Property(currency => currency.TypeCurrency)
                 .HasConversion(typeCurrency => typeCurrency.Code, code => TypeCurrency.FromCode(code!));
             });
-            
+
+            builder.Property<uint>("Vesion").IsRowVersion();
         }
     }
 }
