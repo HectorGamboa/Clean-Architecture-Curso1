@@ -7,6 +7,10 @@ namespace CleanArchitecture.Domain.Rentals
 {
     public sealed class Rental : Entity
     {
+        private Rental()
+        {
+            
+        }
         private Rental(
             Guid id,
             Guid userId,

@@ -6,6 +6,9 @@ namespace CleanArchitecture.Domain.Users
 {
     public class User : Entity
     {
+        private User()
+        {
+        }
         private User(
             Guid id,
             Name name,

@@ -10,7 +10,11 @@ namespace CleanArchitecture.Domain.Reviews
 {
     public sealed class Review:Entity
     {
-        private Review(Guid id, Guid vehicleId, Guid rentalId, Guid userId, Rating rating, Comment comment):base(id)
+        private Review()
+        {
+            
+        }
+        private Review(Guid id, Guid vehicleId, Guid rentalId, Guid userId, Rating rating, Comment comment) : base(id)
         {
             Id = id;
             VehicleId = vehicleId;
